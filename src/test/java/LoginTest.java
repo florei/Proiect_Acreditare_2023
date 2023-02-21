@@ -14,7 +14,7 @@ public class LoginTest {
         driver.manage().window().maximize();
         driver.get("http://qa5.fasttrackit.org:8008/");
 
-        WebElement accountLink = driver.findElement(By.cssSelector("#menu-item-70 > a"));
+        WebElement accountLink = driver.findElement(By.cssSelector(".store-menu li a[href$='7']"));
         accountLink.click();
         driver.findElement(By.id("username")).sendKeys("florentina.alexa6@gmail.com");
         driver.findElement(By.id("password")).sendKeys("Programare.QA29");
