@@ -1,27 +1,54 @@
+import Pages.AccountPage;
+import Pages.HomePage;
+import Pages.LoginPage;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 
 public class LoginTest {
 
-    @Test
-    public void loginWithValidData(){
-        System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+    private WebDriver driver;
 
+
+    @Before
+    public void initDriver(){
+
+        System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
+        /*System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");*/
+        driver = new ChromeDriver();
+        /*driver = new FirefoxDriver();*/
         driver.manage().window().maximize();
         driver.get("http://qa5.fasttrackit.org:8008/");
+    }
 
-        WebElement accountLink = driver.findElement(By.cssSelector(".store-menu li a[href$='7']"));
-        accountLink.click();
-        driver.findElement(By.id("username")).sendKeys("florentina.alexa6@gmail.com");
-        driver.findElement(By.id("password")).sendKeys("Programare.QA29");
+    @Test
+    public void loginWithValidData(){
+
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginPage = new LoginPage(driver);
+        AccountPage accountPage = new AccountPage(driver);
+
+
+        homePage.clickmyAccountbutton();
+        loginPage.setUsernameField("florentina.alexa6@gmail.com");
+        loginPage.setPasswordField("Programare.QA29");
+        loginPage.clickloginButton();
+
+        Assert.assertEquals("Hello florentina.alexa6", accountPage.getWelcomeText());
+
+
+
+
+
+
 
         wait(6);
-
-        driver.findElement(By.cssSelector("#customer_login > div.u-column1.col-1 > form > p:nth-child(3) > button")).click();
 
 
         driver.close();
@@ -35,4 +62,6 @@ public class LoginTest {
             e.printStackTrace();
         }
     }
+
 }
+
