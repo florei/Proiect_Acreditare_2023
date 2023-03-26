@@ -1,3 +1,5 @@
+package Tests;
+
 import Pages.AccountPage;
 import Pages.HomePage;
 import Pages.LoginPage;
